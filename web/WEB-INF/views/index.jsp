@@ -81,6 +81,9 @@
                             <li>
                                 <a class="J_menuItem" href="<%=path%>/bagType/bagTypePage">包型管理</a>
                             </li>
+                            <li>
+                                <a class="J_menuItem" href="<%=path%>/material/materialPage">材料管理</a>
+                            </li>
                         </ul>
                     </li>
                     <li>

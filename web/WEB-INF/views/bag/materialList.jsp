@@ -13,14 +13,14 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>包型列表</title>
+    <title>材料列表</title>
     <jsp:include page="../common/bootstraptablecss.jsp"></jsp:include>
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>包型列表</h5>
+            <h5>材料列表</h5>
         </div>
         <div class="ibox-content">
             <div class="panel panel-default">
@@ -50,7 +50,7 @@
                     &times;
                 </button>
                 <h4 class="modal-title">
-                    包型说明
+                    材料说明
                 </h4>
             </div>
             <div class="modal-body" id="remarks">
@@ -68,19 +68,19 @@
                     &times;
                 </button>
                 <h4 class="modal-title" id="webAddTitle">
-                    新增包型
+                    新增材料
                 </h4>
             </div>
             <form class="form-horizontal" method="post" id="formadd">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">包型名称：</label>
+                        <label class="col-sm-3 control-label">材料名称：</label>
                         <div class="col-sm-8">
                             <input  name="title" minlength="2" maxlength="20" type="text" class="form-control" required="" aria-required="true">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">包型说明：</label>
+                        <label class="col-sm-3 control-label">材料说明：</label>
                         <div class="col-sm-8">
                             <textarea  name="description" class="form-control" required="" aria-required="true"></textarea>
                         </div>
@@ -113,7 +113,7 @@
             <form class="form-horizontal" method="post" id="update_status">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">包型状态：</label>
+                        <label class="col-sm-3 control-label">材料状态：</label>
                         <div class="col-sm-8">
                             <select class="form-control"  id="status" required name="status">
                                 <option value="0">启用</option>
@@ -143,7 +143,7 @@
                     &times;
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                    包型的修改
+                    材料的修改
                 </h4>
             </div>
             <form class="form-horizontal" id="updateform" >
@@ -151,13 +151,13 @@
 
                         <input type="hidden" name="id" id="id" value="">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">包型名称：</label>
+                            <label class="col-sm-3 control-label">材料名称：</label>
                             <div class="col-sm-8">
                                 <input  name="title" minlength="2" id="title" maxlength="20" type="text" value="" class="form-control" required="" aria-required="true">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">包型说明：</label>
+                            <label class="col-sm-3 control-label">材料说明：</label>
                             <div class="col-sm-8">
                                 <textarea  name="description" class="form-control" id="description" required="" value="" aria-required="true"></textarea>
                             </div>
@@ -176,7 +176,7 @@
 </div>
 <%--网站信息的修改--%>
 <jsp:include page="../common/bootstraptablejs.jsp"></jsp:include>
-<script src="<%=path%>/static/js/pageJs/bagType.js"></script>
+<script src="<%=path%>/static/js/pageJs/material.js"></script>
 </body>
 <%--<script>--%>
     <%--$(function () {--%>

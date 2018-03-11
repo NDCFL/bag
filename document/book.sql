@@ -298,3 +298,30 @@ CREATE TABLE `t_user_role` (
 -- Records of t_user_role
 -- ----------------------------
 INSERT INTO `t_user_role` VALUES ('1', '1', '1', '2018-02-28 09:43:39', '0');
+create table t_bag_type(
+  id bigint PRIMARY KEY  key AUTO_INCREMENT,
+  title VARCHAR(20),
+  description VARCHAR(1000),
+  is_active TINYINT ,
+  create_time DATETIME DEFAULT  NOW()
+
+
+);
+create table t_material(
+  id BIGINT PRIMARY KEY  key AUTO_INCREMENT,
+  bag_type_id BIGINT COMMENT '包型编号',
+  shop_name varchar(100) COMMENT '产品名称',
+  material_name varchar(100) COMMENT '材料名称',
+  material_guige varchar(30) COMMENT '材料规格',
+  material_color VARCHAR(20) COMMENT '材料颜色',
+  material_unit VARCHAR(10) COMMENT  '材料单位',
+  material_yongliang DOUBLE COMMENT  '材料用量',
+  material_haosun DOUBLE COMMENT '材料耗损',
+  material_price DOUBLE COMMENT  '材料单价',
+  material_money DOUBLE COMMENT '材料总金额',
+  material_remark varchar(1000) COMMENT  '材料说明',
+  is_active TINYINT COMMENT '材料状态',
+  create_time DATETIME DEFAULT now()
+
+
+)

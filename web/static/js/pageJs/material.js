@@ -2,7 +2,7 @@
 $('#mytab').bootstrapTable({
     method: 'post',
     contentType: "application/x-www-form-urlencoded",//必须要有！！！！
-    url: "/bagType/bagTypeList",//要请求数据的文件路径
+    url: "/material/materialList",//要请求数据的文件路径
     toolbar: '#toolbar',//指定工具栏
     striped: true, //是否显示行间隔色
     dataField: "res",
@@ -35,18 +35,82 @@ $('#mytab').bootstrapTable({
             valign: 'middle'
         },
         {
-            title: '包型名称',
-            field: 'title',
+            title: '所属包型',
+            field: 'bagTypeName',
             align: 'center',
             sortable: true
         },
         {
-            title: '包型描述',
-            field: 'description',
+            title: '产品名称',
+            field: 'shopName',
             align: 'center',
             sortable: true
+        },
+        {
+            title: '材料规格',
+            field: 'materialGuige',
+            align: 'center',
+            sortable: true
+        },
+        {
+            title: '材料颜色',
+            field: 'materialColor',
+            align: 'center',
+            sortable: true
+        },
+        {
+            title: '材料要求',
+            field: 'materialRemark',
+            align: 'center',
+            sortable: true,
+            formatter: function (value, row, index) {
+                value = (value==null?"暂无说明":value);
+                if(value.length<10){
+                    return '<a   data-toggle="modal" title="点击查看详情" alt="点击查看详情" data-id="\'' + row.id + '\'" data-target="#remark_modal" onclick="return remarks(\'' + value + '\')">'+value.substr(0.10)+'</a>';
+                }else{
+                    return '<a   data-toggle="modal" title="点击查看详情" alt="点击查看详情" data-id="\'' + row.id + '\'" data-target="#remark_modal" onclick="return remarks(\'' + value + '\')">'+value.substr(0.10)+"..."+'</a>';
+                }
+            }
+
         }
         ,
+        {
+            title: '单位',
+            field: 'materialUnit',
+            align: 'center',
+            sortable: true
+        },
+        {
+            title: '用量',
+            field: 'materialYongliang',
+            align: 'center',
+            sortable: true
+        },
+        {
+            title: '耗损',
+            field: 'materialHaosun',
+            align: 'center',
+            sortable: true
+        },
+        {
+            title: '单价',
+            field: 'materialPrice',
+            align: 'center',
+            sortable: true,
+            formatter: function (value, row, index) {
+                return '<span style="color: red">'+value+'(元)</span>';
+            }
+        },
+        {
+            title: '总额',
+            field: 'materialMoney',
+            align: 'center',
+            sortable: true,
+            formatter: function (value, row, index) {
+                return '<span style="color: red">'+value+'(元)</span>';
+            }
+        },
+
         {
             title: '创建时间',
             field: 'createTime',
@@ -71,10 +135,10 @@ $('#mytab').bootstrapTable({
             formatter: function (value, row, index) {
                 if (value == 0) {
                     //表示启用状态
-                    return '<i class="btn btn-primary" >启用</i>';
+                    return '<span style="color: green;" >启用</span>';
                 } else {
                     //表示启用状态
-                    return '<i class="btn btn-danger">停用</i>';
+                    return '<span style="color: red">停用</span>';
                 }
             }
         }
@@ -84,7 +148,7 @@ $('#mytab').bootstrapTable({
             align: 'center',
             field: '',
             formatter: function (value, row, index) {
-                var e = '<a title="编辑" href="javascript:void(0);" id="bagType"  data-toggle="modal" data-id="\'' + row.id + '\'" data-target="#myModal" onclick="return edit(\'' + row.id + '\')"><i class="glyphicon glyphicon-pencil" alt="修改" style="color:green">修改</i></a> ';
+                var e = '<a title="编辑" href="javascript:void(0);" id="material"  data-toggle="modal" data-id="\'' + row.id + '\'" data-target="#myModal" onclick="return edit(\'' + row.id + '\')"><i class="glyphicon glyphicon-pencil" alt="修改" style="color:green">修改</i></a> ';
                 var d = '<a title="删除" href="javascript:void(0);" onclick="del(' + row.id + ',' + row.isActive + ')"><i class="glyphicon glyphicon-trash" alt="删除" style="color:red">删除</i></a> ';
                 var f = '';
                 if (row.isActive == 1) {
@@ -112,7 +176,9 @@ $('#mytab').bootstrapTable({
         }
     }
 })
-
+function  remarks(val) {
+    $("#remarks").html(val);
+}
 //请求服务数据时所传参数
 function queryParams(params) {
     var title = "";
@@ -127,7 +193,7 @@ function queryParams(params) {
         searchVal: title
     }
 }
-function del(bagTypeid, status) {
+function del(materialid, status) {
     if (status == 0) {
         layer.msg("删除失败，已经启用的不允许删除!", {icon: 2, time: 1000});
         return;
@@ -135,7 +201,7 @@ function del(bagTypeid, status) {
     layer.confirm('确认要删除吗？', function (index) {
         $.ajax({
             type: 'POST',
-            url: '/bagType/deleteBagType/' + bagTypeid,
+            url: '/material/deleteMaterial/' + materialid,
             dataType: 'json',
             success: function (data) {
                 if (data.message == '删除成功!') {
@@ -152,7 +218,7 @@ function del(bagTypeid, status) {
     });
 }
 function edit(name) {
-    $.post("/bagType/findBagType/" + name,
+    $.post("/material/findMaterial/" + name,
         function (data) {
             $("#updateform").autofill(data);
         },
@@ -160,7 +226,7 @@ function edit(name) {
     );
 }
 function updatestatus(id, status) {
-    $.post("/bagType/updateStatus/" + id + "/" + status,
+    $.post("/material/updateStatus/" + id + "/" + status,
         function (data) {
             if(status==0){
                 if(data.message=="ok"){
@@ -182,14 +248,14 @@ function updatestatus(id, status) {
 }
 //查询按钮事件
 $('#search_btn').click(function () {
-    $('#mytab').bootstrapTable('refresh', {url: '/bagType/bagTypeList'});
+    $('#mytab').bootstrapTable('refresh', {url: '/material/materialList'});
 })
 function refush() {
-    $('#mytab').bootstrapTable('refresh', {url: '/bagType/bagTypeList'});
+    $('#mytab').bootstrapTable('refresh', {url: '/material/materialList'});
 }
 $("#update").click(function () {
     $.post(
-        "/bagType/bagTypeUpdateSave",
+        "/material/materialUpdateSave",
         $("#updateform").serialize(),
         function (data) {
             if (data.message == "修改成功!") {
@@ -204,7 +270,7 @@ $("#update").click(function () {
 });
 $("#add").click(function () {
     $.post(
-        "/bagType/bagTypeAddSave",
+        "/material/materialAddSave",
         $("#formadd").serialize(),
         function (data) {
             if (data.message == "新增成功!") {
@@ -243,7 +309,7 @@ function deleteMany11() {
     $("#deleteId").val(row);
     layer.confirm('确认要执行批量删除网站信息数据吗？', function (index) {
         $.post(
-            "/bagType/deleteManyBagType",
+            "/material/deleteManyMaterial",
             {
                 "manyId": $("#deleteId").val()
             },
@@ -281,7 +347,7 @@ function deleteMany(){
 $("#updateSta").click(function () {
     layer.confirm('确认要执行批量修改收支包型状态吗？',function(index){
         $.post(
-            "/bagType/deleteManyBagType",
+            "/material/deleteManyMaterial",
             {
                 "manyId":$("#statusId").val(),
                 "status":$("#status").val()

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cfl.dao.MaterialDAO">
+    <resultMap id="materialMap" type="com.cfl.vo.MaterialVo"></resultMap>
+    <select id="getById" resultMap="materialMap" parameterType="long">
+        select *,(select title from t_bag_type where t_bag_type.id=t_material.bag_type_id) as bagTypeName from t_material where id = #{id}
+    </select>
+    <delete id="removeById" parameterType="long">
+        delete from t_material where id = #{id}
+    </delete>
+    <select id="listPage" resultMap="materialMap">
+        select *,(select title from t_bag_type where t_bag_type.id=t_material.bag_type_id) as bagTypeName from t_material  order by create_time desc limit #{pageNo},#{pageSize}
+    </select>
+    <select id="listAll" resultMap="materialMap">
+        select * from t_material
+    </select>
+    <select id="count" resultType="java.lang.Long">
+        select count(*) from t_material
+    </select>
+    <insert id="save" parameterType="materialVo">
+        insert into t_material (bag_type_id, shop_name, material_name, material_guige, material_color, material_unit, material_yongliang, material_haosun, material_price, material_money, material_remark, is_active) values (#{bagTypeId}, #{shopName}, #{materialName}, #{materialGuige}, #{materialColor}, #{materialUnit}, #{materialYongliang}, #{materialHaosun}, #{materialPrice}, #{materialMoney}, #{materialRemark}, #{isActive})
+    </insert>
+    <update id="updateStatus">
+        update t_material set is_active=#{status} where id=#{id}
+    </update>
+    <update id="update">
+        update t_material set
+            bag_type_id = #{bagTypeId},
+            shop_name = #{shopName},
+            material_name = #{materialName},
+            material_guige = #{materialGuige},
+            material_color = #{materialColor},
+            material_unit = #{materialUnit},
+            material_yongliang = #{materialYongliang},
+            material_haosun = #{materialHaosun},
+            material_price = #{materialPrice},
+            material_money = #{materialMoney},
+            material_remark = #{materialRemark}
+        where id = #{id}
+    </update>
+</mapper>
