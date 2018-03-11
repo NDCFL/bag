@@ -2,7 +2,7 @@
 $('#mytab').bootstrapTable({
     method: 'post',
     contentType: "application/x-www-form-urlencoded",//必须要有！！！！
-    url: "/books/booksList",//要请求数据的文件路径
+    url: "/bagType/bagTypeList",//要请求数据的文件路径
     toolbar: '#toolbar',//指定工具栏
     striped: true, //是否显示行间隔色
     dataField: "res",
@@ -20,7 +20,7 @@ $('#mytab').bootstrapTable({
     clickToSelect: true,//是否启用点击选中行
     toolbarAlign: 'right',//工具栏对齐方式
     buttonsAlign: 'right',//按钮对齐方式
-    toolbar: '#toolbar',
+    toolbar: '#toolbar', search: true,
     uniqueId: "id",                     //每一行的唯一标识，一般为主键列
     showExport: true,
     exportDataType: 'all',
@@ -35,74 +35,16 @@ $('#mytab').bootstrapTable({
             valign: 'middle'
         },
         {
-            title: '小说名称',
-            field: 'name',
+            title: '包型名称',
+            field: 'title',
             align: 'center',
             sortable: true
         },
         {
-            title: '小说类型',
-            field: 'bookTypeName',
+            title: '包型描述',
+            field: 'description',
             align: 'center',
             sortable: true
-        },
-        {
-            title: '所属模块',
-            field: 'bookModuleName',
-            align: 'center',
-            sortable: true
-        },
-        {
-            title: '作者',
-            field: 'author',
-            align: 'center',
-            sortable: true
-        },
-        {
-            title: '字数',
-            field: 'wordCount',
-            align: 'center',
-            sortable: true,
-            formatter: function (value, row, index) {
-                return '<span style="color: green">'+parseFloat(value/10000)+'(万字)</i>';
-            }
-        },
-        {
-            title: '章节数',
-            field: 'section',
-            align: 'center',
-            sortable: true,
-            formatter: function (value, row, index) {
-                return '<span style="color: green">'+value+'(章)</i>';
-            }
-        },
-        {
-            title: '是否完本',
-            field: 'isLast',
-            align: 'center',
-            formatter: function (value, row, index) {
-                if (value == 0) {
-                    //表示启用状态
-                    return '<span style="color: green">未完本</i>';
-                } else {
-                    //表示启用状态
-                    return '<span style="color: red">已完本</i>';
-                }
-            }
-        }
-        ,
-        {
-            title: '小说简介',
-            field: 'introduction',
-            align: 'center',
-            sortable: true,
-            formatter: function (value, row, index) {
-                if(value.length<10){
-                    return '<a   data-toggle="modal" title="点击查看详情" alt="点击查看详情" data-id="\'' + row.id + '\'" data-target="#remark_modal_" onclick="return remark_s(\'' + value + '\')">'+value.substr(0,10)+'</a>';
-                }else{
-                    return '<a   data-toggle="modal" title="点击查看详情" alt="点击查看详情" data-id="\'' + row.id + '\'" data-target="#remark_modal_" onclick="return remark_s(\'' + value + '\')">'+value.substr(0,10)+"..."+'</a>';
-                }
-            }
         }
         ,
         {
@@ -124,15 +66,15 @@ $('#mytab').bootstrapTable({
         ,
         {
             title: '当前状态',
-            field: 'status',
+            field: 'isActive',
             align: 'center',
             formatter: function (value, row, index) {
                 if (value == 0) {
                     //表示启用状态
-                    return '<span style="color: green">启用</i>';
+                    return '<i class="btn btn-primary" >启用</i>';
                 } else {
                     //表示启用状态
-                    return '<span style="color: red">停用</i>';
+                    return '<i class="btn btn-danger">停用</i>';
                 }
             }
         }
@@ -142,16 +84,16 @@ $('#mytab').bootstrapTable({
             align: 'center',
             field: '',
             formatter: function (value, row, index) {
-                var e = '<a title="编辑" id="books"  class="J_menuItem" href="/books/booksUpdatePage/'+row.id+'"><i class="glyphicon glyphicon-pencil" alt="修改" style="color:green">修改</i></a> ';
-                var d = '<a title="删除" href="javascript:void(0);" onclick="del(' + row.id + ',' + row.status + ')"><i class="glyphicon glyphicon-trash" alt="删除" style="color:red">删除</i></a> ';
+                var e = '<a title="编辑" href="javascript:void(0);" id="bagType"  data-toggle="modal" data-id="\'' + row.id + '\'" data-target="#myModal" onclick="return edit(\'' + row.id + '\')"><i class="glyphicon glyphicon-pencil" alt="修改" style="color:green">修改</i></a> ';
+                var d = '<a title="删除" href="javascript:void(0);" onclick="del(' + row.id + ',' + row.isActive + ')"><i class="glyphicon glyphicon-trash" alt="删除" style="color:red">删除</i></a> ';
                 var f = '';
-                if (row.status == 1) {
+                if (row.isActive == 1) {
                     f = '<a title="启用" href="javascript:void(0);" onclick="updatestatus(' + row.id + ',' + 0 + ')"><i class="glyphicon glyphicon-ok-sign" style="color:green">启用</i></a> ';
-                } else if (row.status == 0) {
-                    f = '<a title="停用" href="javascript:void(0);" onclick="updatestatus(' + row.id + ',' + 1 + ')"><i class="glyphicon glyphicon-remove-sign"  style="color:#ff1a1c">停用</i></a> ';
+                } else if (row.isActive == 0) {
+                    f = '<a title="停用" href="javascript:void(0);" onclick="updatestatus(' + row.id + ',' + 1 + ')"><i class="glyphicon glyphicon-remove-sign"  style="color:red">停用</i></a> ';
                 }
-                var p = '<a title="章节管理" class="J_menuItem" href="/booksSection/booksSectionPage/'+row.id+'"><i class="glyphicon glyphicon-th-large" alt="章节管理" style="color:#3096fa">章节管理</i></a> ';
-                return e + d + f+p;
+
+                return e + d + f;
             }
         }
     ],
@@ -185,17 +127,15 @@ function queryParams(params) {
         searchVal: title
     }
 }
-function  remarks(val) {
-    $("#remarks").html(val);
-}
-function  remark_s(val) {
-    $("#remark_s").html(val);
-}
-function del(booksid, status) {
+function del(bagTypeid, status) {
+    if (status == 0) {
+        layer.msg("删除失败，已经启用的不允许删除!", {icon: 2, time: 1000});
+        return;
+    }
     layer.confirm('确认要删除吗？', function (index) {
         $.ajax({
             type: 'POST',
-            url: '/books/deleteBooks/' + booksid,
+            url: '/bagType/deleteBagType/' + bagTypeid,
             dataType: 'json',
             success: function (data) {
                 if (data.message == '删除成功!') {
@@ -211,8 +151,16 @@ function del(booksid, status) {
         });
     });
 }
+function edit(name) {
+    $.post("/bagType/findBagType/" + name,
+        function (data) {
+            $("#updateform").autofill(data);
+        },
+        "json"
+    );
+}
 function updatestatus(id, status) {
-    $.post("/books/updateStatus/" + id + "/" + status,
+    $.post("/bagType/updateStatus/" + id + "/" + status,
         function (data) {
             if(status==0){
                 if(data.message=="ok"){
@@ -234,14 +182,14 @@ function updatestatus(id, status) {
 }
 //查询按钮事件
 $('#search_btn').click(function () {
-    $('#mytab').bootstrapTable('refresh', {url: '/books/booksList'});
+    $('#mytab').bootstrapTable('refresh', {url: '/bagType/bagTypeList'});
 })
 function refush() {
-    $('#mytab').bootstrapTable('refresh', {url: '/books/booksList'});
+    $('#mytab').bootstrapTable('refresh', {url: '/bagType/bagTypeList'});
 }
 $("#update").click(function () {
     $.post(
-        "/books/booksUpdateSave",
+        "/bagType/bagTypeUpdateSave",
         $("#updateform").serialize(),
         function (data) {
             if (data.message == "修改成功!") {
@@ -256,7 +204,7 @@ $("#update").click(function () {
 });
 $("#add").click(function () {
     $.post(
-        "/books/booksAddSave",
+        "/bagType/bagTypeAddSave",
         $("#formadd").serialize(),
         function (data) {
             if (data.message == "新增成功!") {
@@ -272,8 +220,8 @@ $("#add").click(function () {
 function deleteMany11() {
     var isactivity = "";
     var row = $.map($("#mytab").bootstrapTable('getSelections'), function (row) {
-        if (row.status == 0) {
-            isactivity += row.status;
+        if (row.isActive == 0) {
+            isactivity += row.isActive;
         }
         return row.id;
     });
@@ -293,9 +241,9 @@ function deleteMany11() {
 
     }
     $("#deleteId").val(row);
-    layer.confirm('确认要执行批量修改小说类型的状态吗？', function (index) {
+    layer.confirm('确认要执行批量删除网站信息数据吗？', function (index) {
         $.post(
-            "/books/deleteManyBooks",
+            "/bagType/deleteManyBagType",
             {
                 "manyId": $("#deleteId").val()
             },
@@ -314,8 +262,8 @@ function deleteMany11() {
 function deleteMany(){
     var isactivity="";
     var row=$.map($("#mytab").bootstrapTable('getSelections'),function(row){
-        if(row.status==0){
-            isactivity+=row.status;
+        if(row.isActive==0){
+            isactivity+=row.isActive;
         }
         return row.id ;
     });
@@ -331,9 +279,9 @@ function deleteMany(){
 
 }
 $("#updateSta").click(function () {
-    layer.confirm('确认要执行批量修改小说类型的状态吗？',function(index){
+    layer.confirm('确认要执行批量修改收支包型状态吗？',function(index){
         $.post(
-            "/books/deleteManyBooks",
+            "/bagType/deleteManyBagType",
             {
                 "manyId":$("#statusId").val(),
                 "status":$("#status").val()

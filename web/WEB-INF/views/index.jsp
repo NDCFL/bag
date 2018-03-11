@@ -74,24 +74,12 @@
                     <li>
                         <a href="javascript:void(0);">
                             <i class="fa fa-home"></i>
-                            <span class="nav-label">小说管理</span>
+                            <span class="nav-label">布料管理</span>
                             <span class="fa arrow"></span>
                         </a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="J_menuItem" href="<%=path%>/bookType/bookTypePage">小说类型</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="<%=path%>/books/booksPage">小说列表</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="<%=path%>/booksCollect/booksCollectPage">小说收藏</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="<%=path%>/booksDiscuss/booksDiscussPage">小说评论</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="<%=path%>/bookModule/bookModulePage">小说模块</a>
+                                <a class="J_menuItem" href="<%=path%>/bagType/bagTypePage">包型管理</a>
                             </li>
                         </ul>
                     </li>
