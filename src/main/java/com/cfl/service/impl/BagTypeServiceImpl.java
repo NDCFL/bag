@@ -5,6 +5,7 @@ import com.cfl.common.StatusQuery;
 import com.cfl.dao.BagTypeDAO;
 import com.cfl.service.BagTypeService;
 import com.cfl.vo.BagTypeVo;
+import com.cfl.vo.Select2Vo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -56,5 +57,10 @@ public class BagTypeServiceImpl implements BagTypeService {
     @Override
     public long count(PageQuery pageQuery) {
         return bagTypeDAO.count(pageQuery);
+    }
+
+    @Override
+    public List<Select2Vo> getBagType() {
+        return bagTypeDAO.getBagType();
     }
 }

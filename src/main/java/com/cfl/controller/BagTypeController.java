@@ -7,6 +7,7 @@ import com.cfl.common.StatusQuery;
 import com.cfl.enums.ActiveStatusEnum;
 import com.cfl.service.BagTypeService;
 import com.cfl.vo.BagTypeVo;
+import com.cfl.vo.Select2Vo;
 import com.cfl.vo.UserVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by chenfeilong on 2017/10/21.
@@ -65,6 +67,11 @@ public class BagTypeController {
     public BagTypeVo findbagType(@PathVariable("id") long id){
         BagTypeVo bagType = bagTypeService.getById(id);
         return bagType;
+    }
+    @RequestMapping("/getBagType")
+    @ResponseBody
+    public List<Select2Vo> getBagType(){
+        return bagTypeService.getBagType();
     }
     @RequestMapping("/bagTypeUpdateSave")
     @ResponseBody

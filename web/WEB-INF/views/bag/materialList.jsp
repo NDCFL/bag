@@ -28,6 +28,49 @@
                     查询条件
                 </div>
                 <div class="panel-body form-group" style="margin-bottom:0px;">
+                    <label class="col-sm-1 control-label">所属包型</label>
+                    <div class="col-sm-2">
+                        <select class="form-control" name="bagTypeId" id="bagTypeId_" >
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 control-label">产品名称</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="shopName" name="shopName"/>
+                    </div>
+                    <label class="col-sm-1 control-label">材料规格</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="materialGuige" name="materialGuige"/>
+                    </div>
+                    <label class="col-sm-1 control-label">材料颜色</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="materialColor" name="materialColor"/>
+                    </div>
+                </div>
+                <div class="panel-body form-group" style="margin-bottom:0px;">
+                    <label class="col-sm-1 control-label">材料单位</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="materialUnit" name="materialUnit"/>
+                    </div>
+                    <label class="col-sm-1 control-label">材料用量</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" name="materialYongliang" id="materialYongliang"/>
+                    </div>
+                    <label class="col-sm-1 control-label">材料耗损</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" name="materialHaosun" id="materialHaosun"/>
+                    </div>
+                    <label class="col-sm-1 control-label">材料要求</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="descriptions" name="description"/>
+                    </div>
+                </div>
+                <div class="panel-body form-group" style="margin-bottom:0px;">
+                    <div class="col-sm-3">
+                        <button class="btn btn-primary col-sm-12 " id="search_btn">查询</button>
+                    </div>
+                </div>
+                <div class="panel-body form-group" style="margin-bottom:0px;">
                     <table id="mytab" name="mytab" class="table table-hover"></table>
                     <div id="toolbar" class="btn-group pull-right" style="margin-right: 20px;">
                         <button id="btn_delete" onclick="deleteMany();" type="button" class="btn btn-default" style="display: block;">
@@ -35,6 +78,9 @@
                         </button>
                         <button id="btn_add" type="button" class="btn btn-default" data-toggle="modal" data-target="#webAdd">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true" ></span>新增
+                        </button>
+                        <button id="daochu" type="button" class="btn btn-default" onclick="method5(mytab)">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true" ></span>导出数据
                         </button>
                     </div>
                 </div>
@@ -74,15 +120,58 @@
             <form class="form-horizontal" method="post" id="formadd">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">材料名称：</label>
-                        <div class="col-sm-8">
-                            <input  name="title" minlength="2" maxlength="20" type="text" class="form-control" required="" aria-required="true">
+                        <label class="col-sm-2 control-label">所属包型</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="bagTypeId" id="bagTypeId" >
+
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">产品名称</label>
+                        <div class="col-sm-4">
+                            <input  name="shopName" minlength="2" placeholder="产品名称" maxlength="20" type="text" class="form-control" required="" aria-required="true">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">材料说明：</label>
-                        <div class="col-sm-8">
-                            <textarea  name="description" class="form-control" required="" aria-required="true"></textarea>
+                        <label class="col-sm-2 control-label">材料名称</label>
+                        <div class="col-sm-4">
+                            <input  name="materialName" minlength="2" placeholder="材料名称" maxlength="20" type="text" class="form-control" required="" aria-required="true">
+                        </div>
+                        <label class="col-sm-2 control-label">材料规格</label>
+                        <div class="col-sm-4">
+                            <input  name="materialGuige" minlength="2" placeholder="材料规格" maxlength="20" type="text" class="form-control" required="" aria-required="true">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">材料颜色</label>
+                        <div class="col-sm-4">
+                            <input  name="materialColor" minlength="2" placeholder="材料颜色" maxlength="20" type="text" class="form-control" required="" aria-required="true">
+                        </div>
+                        <label class="col-sm-2 control-label">材料单位</label>
+                        <div class="col-sm-4">
+                            <input  name="materialUnit" minlength="2" placeholder="材料单位" maxlength="20" type="text" class="form-control" required="" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">材料用量</label>
+                        <div class="col-sm-4">
+                            <input  name="materialYongliang" minlength="2" placeholder="材料用量" maxlength="20" type="text" class="form-control" required="" aria-required="true">
+                        </div>
+                        <label class="col-sm-2 control-label">材料耗损</label>
+                        <div class="col-sm-4">
+                            <input  name="materialHaosun" minlength="2" maxlength="20"  placeholder="材料耗损" type="text" class="form-control" required="" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">材料单价</label>
+                        <div class="col-sm-4">
+                            <input  name="materialPrice" minlength="2" placeholder="材料单价" maxlength="20" type="number" class="form-control" required="" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">材料说明</label>
+                        <div class="col-sm-10">
+                            <textarea  name="description" class="form-control" placeholder="材料说明" required="" aria-required="true"></textarea>
                         </div>
                     </div>
                 </div>
@@ -148,20 +237,61 @@
             </div>
             <form class="form-horizontal" id="updateform" >
                 <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">所属包型</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="bagTypeId" id="bagType_Id" >
 
-                        <input type="hidden" name="id" id="id" value="">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">材料名称：</label>
-                            <div class="col-sm-8">
-                                <input  name="title" minlength="2" id="title" maxlength="20" type="text" value="" class="form-control" required="" aria-required="true">
-                            </div>
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">材料说明：</label>
-                            <div class="col-sm-8">
-                                <textarea  name="description" class="form-control" id="description" required="" value="" aria-required="true"></textarea>
-                            </div>
+                        <label class="col-sm-2 control-label">产品名称</label>
+                        <div class="col-sm-4">
+                            <input  name="shopName" minlength="2" placeholder="产品名称" maxlength="20" type="text" class="form-control" required="" aria-required="true">
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">材料名称</label>
+                        <div class="col-sm-4">
+                            <input  name="materialName" minlength="2" placeholder="材料名称" maxlength="20" type="text" class="form-control" required="" aria-required="true">
+                        </div>
+                        <label class="col-sm-2 control-label">材料规格</label>
+                        <div class="col-sm-4">
+                            <input  name="materialGuige" minlength="2" placeholder="材料规格" maxlength="20" type="text" class="form-control" required="" aria-required="true">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">材料颜色</label>
+                        <div class="col-sm-4">
+                            <input  name="materialColor" minlength="2" placeholder="材料颜色" maxlength="20" type="text" class="form-control" required="" aria-required="true">
+                        </div>
+                        <label class="col-sm-2 control-label">材料单位</label>
+                        <div class="col-sm-4">
+                            <input  name="materialUnit" minlength="2" placeholder="材料单位" maxlength="20" type="text" class="form-control" required="" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">材料用量</label>
+                        <div class="col-sm-4">
+                            <input  name="materialYongliang" minlength="2" placeholder="材料用量" maxlength="20" type="text" class="form-control" required="" aria-required="true">
+                        </div>
+                        <label class="col-sm-2 control-label">材料耗损</label>
+                        <div class="col-sm-4">
+                            <input  name="materialHaosun" minlength="2" maxlength="20"  placeholder="材料耗损" type="text" class="form-control" required="" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">材料单价</label>
+                        <div class="col-sm-4">
+                            <input  name="materialPrice" minlength="2" placeholder="材料单价" maxlength="20" type="number" class="form-control" required="" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">材料说明</label>
+                        <div class="col-sm-10">
+                            <textarea  name="description" class="form-control" placeholder="材料说明" required="" aria-required="true"></textarea>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭
@@ -177,6 +307,7 @@
 <%--网站信息的修改--%>
 <jsp:include page="../common/bootstraptablejs.jsp"></jsp:include>
 <script src="<%=path%>/static/js/pageJs/material.js"></script>
+    <script src="<%=path%>/static/js/jquery.table2excel.min.js"></script>
 </body>
 <%--<script>--%>
     <%--$(function () {--%>
@@ -192,4 +323,24 @@
     <%--});--%>
 
 <%--</script>--%>
+<script>
+    $.post(
+        "/bagType/getBagType",
+        function (data) {
+            $("#bagTypeId").select2({
+                data: data
+            })
+            $("#bagType_Id").select2({
+                data: data
+            })
+            $("#bagTypeId_").select2({
+                data: data
+            })
+            $("#select2-bagTypeId_-container").remove();
+            $("#select2-bagTypeId-container").remove();
+            $("#select2-bagType_Id-container").remove();
+        },
+        "json"
+    );
+</script>
 </html>
