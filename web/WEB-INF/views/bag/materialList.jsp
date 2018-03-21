@@ -167,6 +167,10 @@
                         <div class="col-sm-4">
                             <input  name="materialPrice" minlength="2" placeholder="材料单价" maxlength="20" type="number" class="form-control" required="" aria-required="true">
                         </div>
+                        <label class="col-sm-2 control-label">用量计算</label>
+                        <div class="col-sm-4">
+                            <input  name="jisuan" minlength="2" placeholder="如(10*10/91.4/147)" maxlength="20" type="text" class="form-control" required="" aria-required="true">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">材料说明</label>
@@ -284,6 +288,10 @@
                         <label class="col-sm-2 control-label">材料单价</label>
                         <div class="col-sm-4">
                             <input  name="materialPrice" minlength="2" placeholder="材料单价" maxlength="20" type="number" class="form-control" required="" aria-required="true">
+                        </div>
+                        <label class="col-sm-2 control-label">用量计算</label>
+                        <div class="col-sm-4">
+                            <input  name="jsuan" minlength="2" placeholder="如(10*10/91.4/147)" maxlength="20" type="text" class="form-control" required="" aria-required="true">
                         </div>
                     </div>
                     <div class="form-group">

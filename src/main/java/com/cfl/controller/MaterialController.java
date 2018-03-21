@@ -51,11 +51,23 @@ public class MaterialController {
     @ResponseBody
     public Message addSavematerial(MaterialVo material, HttpSession session) throws  Exception {
         try{
-            UserVo userVo = (UserVo) session.getAttribute("userVo");
-            material.setIsActive(ActiveStatusEnum.ACTIVE.getValue().byteValue());
-            materialService.save(material);
+            String gongsi = material.getJisuan().replace("*","/");
+            String data[] = gongsi.split("/");
+            //10*10/91.4/147
+            float chang = Float.parseFloat(data[0]);
+            float kuan = Float.parseFloat(data[1]);
+            float guding = Float.parseFloat(data[2]);
+            float cima = Float.parseFloat(data[3]);
+            if(chang==0||kuan==0||guding==0|| cima==0){
+                return  Message.fail("公式输入有误!");
+            }else{
+                System.out.println("长："+kuan+"---宽--"+kuan+"----固定值："+guding+"=-尺码："+cima);
+            }
+//            material.setIsActive(ActiveStatusEnum.ACTIVE.getValue().byteValue());
+//            materialService.save(material);
             return  Message.success("新增成功!");
         }catch (Exception E){
+            E.printStackTrace();
             return Message.fail("新增失败!");
         }
 

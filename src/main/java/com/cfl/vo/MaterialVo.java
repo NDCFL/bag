@@ -22,6 +22,7 @@ public class MaterialVo implements Serializable {
     private  Byte isActive;//'材料状态',
     private Date createTime;//创建时间
     private String bagTypeName;
+    private String jisuan;
     private BagTypeVo bagTypeVo;
 
     public Long getId() {
@@ -150,5 +151,13 @@ public class MaterialVo implements Serializable {
 
     public void setBagTypeName(String bagTypeName) {
         this.bagTypeName = bagTypeName;
+    }
+
+    public String getJisuan() {
+        return jisuan;
+    }
+
+    public void setJisuan(String jisuan) {
+        this.jisuan = jisuan;
     }
 }
